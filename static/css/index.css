@@ -105,6 +105,129 @@
     margin-right: 8px;
 }
 
+.addedSongs {
+    width: 224px;
+    height: 324px;
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 8px;
+    font-family: 'Arial', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 23px;
+    letter-spacing: 0.03em;
+    color: #FFFFFF;
+    position: fixed;
+    overflow: hidden;
+    margin-bottom: 20px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
+    margin-top: 44px;
+}
+
+.songCover {
+    width: 100%;
+    height: 75%;
+}
+
+.songCover img {
+    width: 85%;
+    height: 80%;
+    margin-top: 20px;
+    margin-left: 7%;
+    object-fit: fill;
+    opacity: 1;
+    border-radius: 50%;
+}
+
+
+.nameSong {
+    margin-left: 7%;
+    bottom: 0;
+    width: 100%;
+    font-family: 'Arial', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    color: #FFFFFF;
+    margin-bottom: 8px;
+}
+
+.genreSong{
+    margin-left: 7%;
+    width: 182px;
+    height: 21px;
+    font-family: 'Arial';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 21px;
+    color: #B3B3B3;
+}
+
+.more{
+    margin-left: 85%;
+    cursor: pointer;
+}
+
+.remove {
+    position: absolute;
+    display: none;
+    width: 87px;
+    height: 21px;
+    border-radius: 8px;
+    background-color: red;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
+    font-family: 'Roboto Flex', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    align-items: center;
+    padding-left: 4.1%;
+    color: #FFFFFF;
+    margin-top: 370px;
+    margin-left: 220px;
+    cursor: pointer;
+    z-index: 2;
+}
+
+#whatListen {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 626px;
+    height: 49px;
+    left: 647px;
+    top: 55px;
+    background: #D9D9D9;
+    border-radius: 107px;
+    margin-top: 48px;
+    margin-left: 20px;
+    font-family: 'Circular Spotify Text';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 19px;
+    line-height: 27px;
+    color: rgba(24, 20, 20, 0.4);
+}
+
+#whatListen img {
+    margin-right: 8px;
+}
+
+#logIn {
+    margin-top: 30px;
+    font-family: 'Inknut Antiqua';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 31px;
+    line-height: 20px;
+    text-align: center;
+    letter-spacing: -0.43px;
+    color: #FFFFFF;
+    cursor: pointer;
+}
+
 #addSong{
     display: flex;
     flex-direction: row;
@@ -193,38 +316,4 @@
     text-align: center;
     cursor: pointer;
     display: inline-block;
-}
-
-#whatListen{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    width: 626px;
-    height: 49px;
-    left: 647px;
-    top: 55px;
-    background: #D9D9D9;
-    border-radius: 107px;
-    margin-top: 48px;
-    margin-left: 20px;
-    font-family: 'Circular Spotify Text';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 19px;
-    line-height: 27px;
-    color: rgba(24, 20, 20, 0.4);
-}
-
-#logIn{
-    margin-top: 30px;
-    font-family: 'Inknut Antiqua';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 31px;
-    line-height: 20px;
-    text-align: center;
-    letter-spacing: -0.43px;
-    color: #FFFFFF;
-    cursor: pointer;
 }

@@ -24,7 +24,6 @@
                         <img src="static/img/account_circle.png">
                     </div>
                 </div>
-    
             </div>
         </div>
     
@@ -34,13 +33,26 @@
                 <div class="col-2 offset-1">
                     <p class="add">Aggiungi playlist:</p>
                 </div>
-                <div class="col-2 offset-1">
-                    Nome Canzone, Genere
+                <!--  First Song -->
+                <div class="col-2 offset-1" style="position: relative;">
+                    <div class="addedSongs" style="margin-left: 20px;">
+                        <div class="songCover"><img src="static/img/coverSong1.png"></div>
+                        <div class="nameSong">Nome Canzone</div>
+                        <div class="genreSong">Genere</div>
+                        <img src="static/img/more.png" class="more" onclick="toggleRemove(this)">
+                    </div>
+                    <div class="remove" onclick="removeSong(this)">Rimuovi</div>
                 </div>
-                <div class="col-2">
-                    Nome Canzone, Genere
+                <!--  Second Song -->
+                <div class="col-2" style="position: relative;">
+                    <div class="addedSongs" style="margin-left: 20px;">
+                        <div class="songCover"><img src="static/img/coverSong1.png"></div>
+                        <div class="nameSong">Nome Canzone</div>
+                        <div class="genreSong">Genere</div>
+                        <img src="static/img/more.png" class="more" onclick="toggleRemove(this)">
+                    </div>
+                    <div class="remove" onclick="removeSong(this)">Rimuovi</div>
                 </div>
-
 
             </div>
         </div>
@@ -78,6 +90,9 @@
         </div>
     </div>   
 </div>
-    
+
+
+<script type="text/javascript" src="static/js/index.js"></script>
+
 </body>
-</html>     
+</html>

@@ -1,0 +1,79 @@
+#hero{
+    background: #423D3D;
+    min-height: 100vh;
+    position: relative;
+}
+
+#content {
+    position: relative;
+    z-index: 1;
+}
+
+.cover{
+    width: 100%;
+    height: 90%;
+    padding-top: 134px;
+}
+
+.divider-line{
+    width: 100%;
+    background-color: white;
+    margin-top: 70px;
+    border: 2px solid #FFFFFF;
+    filter: blur(2px);
+    transform: rotate(0.21deg);
+}
+
+#black{
+    position: absolute;
+    width: 100%;
+    height: 24.9%;
+    margin-top: 71px;
+    background: #000000;
+}
+
+.name{
+    font-family: 'Kite One';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 50px;
+    line-height: 72px;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+.author{
+    font-family: 'Kite One';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 46px;
+    text-align: center;
+    color: #999999;
+}
+
+.genre{
+    font-family: 'Kite One';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 46px;
+    text-align: center;
+    color: #999999;
+}
+
+.fullTime{
+width: 100%;
+height: 5px;
+background: #B3B3B3;
+border-radius: 50px;
+margin-top: 21px;
+}
+
+.actualTime{
+margin-top: -5px;
+width: 144px;
+height: 5px;
+background: #39FF14;
+border-radius: 50px;
+}
