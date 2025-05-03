@@ -4,6 +4,19 @@
     position: relative;
 }
 
+.navbar{
+    margin-top: 22px;
+    cursor: pointer;
+}
+
+.divider-line{
+    width: 100%;
+    border: 2px solid #FFFFFF;
+    transform: rotate(0.21deg);
+    background-color: white;
+    margin-top: 32px;
+}
+
 .add{
     margin-top: 35px;
     font-family: 'Myanmar Khyay';
@@ -34,10 +47,9 @@
 
 .line{
     margin-top: 20px;
-    position: absolute;
     width: 33.33%;
     border: 2px solid rgba(179, 179, 179, 0.49);
-    background-color:rgba(179, 179, 179, 0.49);
+    background-color: rgba(179, 179, 179, 0.49);
     transform: rotate(-0.1deg);
 }
 
@@ -51,6 +63,7 @@
     border-radius: 16px;
     padding: 10px 0;
     height: 50px;
+    cursor: pointer;
 }
 
 .list {
@@ -85,6 +98,7 @@
     height: 50px;
     justify-content: flex-start;
     margin-bottom: 30px;
+    cursor: pointer;
 }
 
 #select img {
@@ -94,9 +108,8 @@
 #addSong{
     display: flex;
     flex-direction: row;
-    padding-top: 10px;
-    align-items: self-start;
-    justify-content: center;
+    padding: 0;
+    align-items: center;
     width: 100%;
     height: 59px;
     margin-top: 15px;
@@ -108,37 +121,61 @@
     font-size: 15px;
     line-height: 16px;
     color: rgb(255, 255, 255);
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
 }
 
+.cover {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    margin-right: 10px;
+}
 
 .cover img{
     width: 59px;
     height: 59px;
     box-shadow: inset -1px 0px 2px rgba(170, 170, 170, 0.25);
-    margin-left: -49px;
-    border-radius: 8px;
-    margin-right: 10px;
-    margin-top: -10px;
+    border-radius: 8px 0 0 8px;
 }
 
-.aggiungi{
-    margin-top: 14px;
-font-family: 'Archivo';
-font-style: normal;
-font-weight: 400;
-font-size: 14px;
-line-height: 15px;
-display: flex;
-align-items: center;
-letter-spacing: -0.035em;
-color: #27B053;
-}
 .songName{
-
+    font-family: 'Archivo';
+    font-weight: 400;
+    font-size: 15px;
+    color: #FFFFFF;
+    margin-right: 2px;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
 }
+
 .songArtist{
-
+    font-family: 'Archivo';
+    font-weight: 300;
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.7);
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
 }
+
+.aggiungi {
+    margin-left: auto;
+    padding-right: 15px;
+    font-family: 'Archivo';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 15px;
+    display: flex;
+    align-items: center;
+    letter-spacing: -0.035em;
+    color: #27B053;
+    cursor: pointer;
+}
+
 .button {
     margin-top: 158px;
     padding: 10px 25px;
@@ -158,8 +195,36 @@ color: #27B053;
     display: inline-block;
 }
 
+#whatListen{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 626px;
+    height: 49px;
+    left: 647px;
+    top: 55px;
+    background: #D9D9D9;
+    border-radius: 107px;
+    margin-top: 48px;
+    margin-left: 20px;
+    font-family: 'Circular Spotify Text';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 19px;
+    line-height: 27px;
+    color: rgba(24, 20, 20, 0.4);
+}
 
-
-
-
-
+#logIn{
+    margin-top: 30px;
+    font-family: 'Inknut Antiqua';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 31px;
+    line-height: 20px;
+    text-align: center;
+    letter-spacing: -0.43px;
+    color: #FFFFFF;
+    cursor: pointer;
+}
