@@ -14,10 +14,10 @@
         <div class="login-container">
             <div class="login-card">
                 <h1 class="login-title">Log in</h1>
-                <form>
+                <form action="login" method="post">
                     <div class="mb-4">
-                        <label for="fiscal-code" class="form-label">Nome-Cognome</label>
-                        <input type="text" class="form-control" id="fiscal-code" required aria-label="Enter your fiscal code.
+                        <label for="username" class="form-label">Nome & Cognome</label>
+                        <input type="text" class="form-control" id="username" required aria-label="Enter your name" placeholder="Il tuo nome e il tuo cognome">
                     </div>
                     <div class="mb-4">
                         <div class="d-flex justify-content-between align-items-center mb-1">
@@ -27,7 +27,7 @@
                                 <span>Hide</span>
                             </button>
                         </div>
-                        <input type="password" class="form-control" id="password" required aria-label="Enter your password">
+                        <input type="password" class="form-control" class="password" id="password" required aria-label="Enter your password" placeholder="La password universale del sito">
                     </div>
                     <button type="submit" class="btn btn-login btn-primary" id="login">Login</button>
                     <p class="terms-text">
