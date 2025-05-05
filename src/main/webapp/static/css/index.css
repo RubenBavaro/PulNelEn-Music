@@ -112,12 +112,14 @@
     letter-spacing: 0.7px;
     text-decoration-color: rgba(255, 255, 255, 0.46);
     color: rgba(255, 255, 255, 0.46);
-    font-family: 'Archivo';    margin: 0;
+    font-family: 'Archivo';    
+    margin: 0;
     height: 100%;
 }
 
 .list img {
-    margin-right: 8px;
+    margin-left: -75px;
+    margin-right: 60px;
 }
 
 #select{
@@ -133,7 +135,6 @@
     justify-content: flex-start;
     margin-bottom: 30px;
     width: 400px;
-    margin-left: -50px;
 }
 
 #select img {
@@ -282,7 +283,6 @@
     position: relative;
     overflow: hidden;
     width: 350px;
-    margin-left: -25px;
 }
 
 .cover {
@@ -395,4 +395,54 @@ input[type="search"]::-webkit-search-results-decoration {
     background: transparent;
     color: rgba(255, 255, 255, 0.46);
     font-family: 'Archivo';
+}
+
+@media (max-width: 1920px) {
+    .list img {
+        margin-left: 40px;
+        margin-right: -40px;
+    }
+
+    #select{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        background: #383838;
+        border-radius: 108px;
+        box-shadow: 0px 4px 8px 3px rgba(0, 0, 0, 0.15), 0px 1px 3px rgba(0, 0, 0, 0.3);
+        color: rgba(255, 255, 255, 0.46);
+        font-family: 'Archivo';
+        height: 50px;
+        justify-content: flex-start;
+        margin-bottom: 30px;
+        width: 400px;
+        margin-left: -50px;
+    }
+    
+    #select img {
+        margin-right: 8px;
+    }
+
+    #addSong{
+        display: flex;
+        flex-direction: row;
+        padding: 0;
+        align-items: center;
+        width: 100%;
+        height: 59px;
+        margin-top: 15px;
+        background: #383838;
+        border-radius: 8px;
+        font-family: 'Archivo';
+        font-style: normal;
+        font-weight: 100;
+        font-size: 15px;
+        line-height: 16px;
+        color: rgb(255, 255, 255);
+        margin-bottom: 20px;
+        position: relative;
+        overflow: hidden;
+        width: 350px;
+        margin-left: -25px;
+    }
 }
