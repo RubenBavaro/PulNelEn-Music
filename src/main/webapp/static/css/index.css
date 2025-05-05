@@ -4,9 +4,45 @@
     position: relative;
 }
 
+.navbar-container {
+    position: relative;
+    display: inline-block;
+}
+
 .navbar{
     margin-top: 22px;
     cursor: pointer;
+}
+
+.navbar-dropdown {
+    display: none;
+    position: absolute;
+    left: 80px;
+    top: 40px;
+    background-color: #383838;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);
+    z-index: 10;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.navbar-dropdown.show {
+    display: block;
+}
+
+.navbar-item {
+    color: #FFFFFF;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    font-family: 'Circular Spotify Text', 'Arial', sans-serif;
+    font-size: 16px;
+    transition: background-color 0.2s ease;
+}
+
+.navbar-item:hover {
+    background-color: #4e4e4e;
 }
 
 .divider-line{
@@ -63,7 +99,6 @@
     border-radius: 16px;
     padding: 10px 0;
     height: 50px;
-    cursor: pointer;
 }
 
 .list {
@@ -92,13 +127,13 @@
     background: #383838;
     border-radius: 108px;
     box-shadow: 0px 4px 8px 3px rgba(0, 0, 0, 0.15), 0px 1px 3px rgba(0, 0, 0, 0.3);
-    padding: 12px 20px;
     color: rgba(255, 255, 255, 0.46);
     font-family: 'Archivo';
     height: 50px;
     justify-content: flex-start;
     margin-bottom: 30px;
-    cursor: pointer;
+    width: 400px;
+    margin-left: -50px;
 }
 
 #select img {
@@ -117,7 +152,7 @@
     line-height: 23px;
     letter-spacing: 0.03em;
     color: #FFFFFF;
-    position: fixed;
+    position: absolute;
     overflow: hidden;
     margin-bottom: 20px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
@@ -195,7 +230,6 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    width: 626px;
     height: 49px;
     left: 647px;
     top: 55px;
@@ -247,6 +281,8 @@
     margin-bottom: 20px;
     position: relative;
     overflow: hidden;
+    width: 350px;
+    margin-left: -25px;
 }
 
 .cover {
@@ -316,4 +352,47 @@
     text-align: center;
     cursor: pointer;
     display: inline-block;
+}
+
+.search-input {
+    background: transparent;
+    border: none;
+    outline: none;
+    width: 90%;
+    color: inherit;
+    font-size: inherit;
+    font-family: inherit;
+    padding: 0;
+}
+
+.search-input:focus {
+    outline: none;
+}
+
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+    display: none;
+}
+
+#whatListen .search-input {
+    background: transparent;
+    color: rgba(24, 20, 20, 0.4);
+    text-align: left;
+}
+
+.list .search-input {
+    background: transparent;
+    color: rgba(255, 255, 255, 0.46);
+    text-align: center;
+    margin-left: 0;
+    font-size: 14px;
+    letter-spacing: 0.7px;
+}
+
+#select .search-input {
+    background: transparent;
+    color: rgba(255, 255, 255, 0.46);
+    font-family: 'Archivo';
 }

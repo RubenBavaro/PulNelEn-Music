@@ -8,91 +8,115 @@
     <link rel="stylesheet" type="text/css" href="static/css/index.css"/>
 </head>
 <body>
-<div id="hero">  
-<div class="shade"></div> 
-    <div id="content">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-1">
-                    <img class="navbar" src="static/img/navbar.png">
-                </div>
-                <div class="col-4 offset-3">
-                    <div id="whatListen"><img src="static/img/search.png">What do you want to listen to?</div>
-                </div>
-                <div class="col-2 offset-2">
-                    <a href="login.html">
-                        <div id="logIn">Log in
-                            <img src="static/img/account_circle.png">
+    <div id="hero">  
+        <div class="shade"></div> 
+            <div id="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-1">
+                            <div class="navbar-container">
+                                <img class="navbar" src="static/img/navbar.png" id="navbarToggle">
+                                <div class="navbar-dropdown" id="navbarDropdown">
+                                    <a href="index.html" class="navbar-item">Home</a>
+                                    <a href="player.html" class="navbar-item">Last Song</a>
+                                </div>
+                            </div>
                         </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-    
-    <div class="divider-line"></div>
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-2 offset-1">
-                    <p class="add">Aggiungi playlist:</p>
-                </div>
-                <!--  First Song -->
-                <div class="col-2 offset-1" style="position: relative;">
-                    <div class="addedSongs" style="margin-left: 20px;">
-                        <div class="songCover"><img src="static/img/coverSong1.png"></div>
-                        <div class="nameSong">Nome Canzone</div>
-                        <div class="genreSong">Genere</div>
-                        <img src="static/img/more.png" class="more" onclick="toggleRemove(this)">
+                        <div class="col-4 offset-3">
+                            <div id="whatListen">
+                                <img src="static/img/search.png" class="search-icon">
+                                <input type="search" class="search-input" placeholder="What do you want to listen to?" value="What do you want to listen to?">
+                            </div>
+                        </div>
+                        <div class="col-2 offset-2">
+                            <a href="login.html">
+                                <div id="logIn">Log in
+                                    <img src="static/img/account_circle.png">
+                                </div>
+                            </a>
+                        </div>
                     </div>
-                    <div class="remove" onclick="removeSong(this)">Rimuovi</div>
                 </div>
-                <!--  Second Song -->
-                <div class="col-2" style="position: relative;">
-                    <div class="addedSongs" style="margin-left: 20px;">
-                        <div class="songCover"><img src="static/img/coverSong1.png"></div>
-                        <div class="nameSong">Nome Canzone</div>
-                        <div class="genreSong">Genere</div>
-                        <img src="static/img/more.png" class="more" onclick="toggleRemove(this)">
-                    </div>
-                    <div class="remove" onclick="removeSong(this)">Rimuovi</div>
-                </div>
-
-            </div>
-        </div>
-        <div class="line"></div>
-
-        <div class="container-fluid">
-            <div class="row">
-            <div class="col-2 offset-1">
-                <p class="add" style="font-size: 25px;">Nome playlist:</p>
-                <div class="name">  
-                    <p class="list"> <img src="static/img/modify.png"> 4ITIA-A</p>
-                </div>
-
-
-            <p class="add" style="font-size: 25px; margin-top: 104px;">Aggiungi canzoni:</p>
-            <div id="select"><img src="static/img/search.png"> Seleziona la canzone da aggiungere</div>
             
-            <div id="addSong">
-                <div class="cover"><img src="static/img/coverSong.png"></div> 
-                <div class="songName">[SONG NAME 1] •</div>        
-                <div class="songArtist"> [ARTIST]</div> 
-                <div class="aggiungi">+ADD</div>
-            </div>
-
-            <div id="addSong">
-                <div class="cover"><img src="static/img/coverSong.png"></div> 
-                <div class="songName">[SONG NAME 1] • </div>        
-                <div class="songArtist"> [ARTIST]</div> 
-                <div class="aggiungi">+ADD</div>
-            </div>
-
-            <div class="button">CREA</div>
-            </div>
-            </div>
+            <div class="divider-line"></div>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-2 offset-1">
+                            <p class="add">Aggiungi playlist:</p>
+                        </div>
+                        <!--  First Song -->
+                        <div class="col-2 offset-1" style="position: relative;">
+                            <div class="addedSongs" style="margin-left: 20px;">
+                                <div class="songCover"><img src="static/img/coverSong1.png"></div>
+                                <div class="nameSong">Nome Canzone</div>
+                                <div class="genreSong">Genere</div>
+                                <img src="static/img/more.png" class="more" onclick="toggleRemove(this)">
+                            </div>
+                            <div class="remove" onclick="removeSong(this)">Rimuovi</div>
+                        </div>
+                        <!--  Second Song -->
+                        <div class="col-2" style="position: relative;">
+                            <div class="addedSongs" style="margin-left: 20px;">
+                                <div class="songCover"><img src="static/img/coverSong1.png"></div>
+                                <div class="nameSong">Nome Canzone</div>
+                                <div class="genreSong">Genere</div>
+                                <img src="static/img/more.png" class="more" onclick="toggleRemove(this)">
+                            </div>
+                            <div class="remove" onclick="removeSong(this)">Rimuovi</div>
+                        </div>
+        
+                        <!--  Third Song -->
+                        <div class="col-2" style="position: relative;">
+                            <div class="addedSongs" style="margin-left: 20px;">
+                                <div class="songCover"><img src="static/img/coverSong1.png"></div>
+                                <div class="nameSong">Nome Canzone</div>
+                                <div class="genreSong">Genere</div>
+                                <img src="static/img/more.png" class="more" onclick="toggleRemove(this)">
+                            </div>
+                            <div class="remove" onclick="removeSong(this)">Rimuovi</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="line"></div>
+        
+                <div class="container-fluid">
+                    <div class="row">
+                    <div class="col-2 offset-1">
+                        <p class="add" style="font-size: 25px;">Nome playlist:</p>
+                        <div class="name">  
+                            <p class="list">
+                                <img src="static/img/modify.png">
+                                <input type="text" class="search-input" placeholder="4ITIA-A" value="4ITIA-A">
+                            </p>
+                        </div>
+        
+        
+                    <p class="add" style="font-size: 25px; margin-top: 104px;">Aggiungi canzoni:</p>
+                    <div id="select">
+                        <img src="static/img/search.png" class="search-icon">
+                        <input type="search" class="search-input" placeholder="Seleziona la canzone da aggiungere" value="Seleziona la canzone da aggiungere">
+                    </div>
+                    
+                    <div id="addSong">
+                        <div class="cover"><img src="static/img/coverSong.png"></div> 
+                        <div class="songName">[SONG NAME 1] •</div>        
+                        <div class="songArtist"> [ARTIST]</div> 
+                        <div class="aggiungi">+ADD</div>
+                    </div>
+        
+                    <div id="addSong">
+                        <div class="cover"><img src="static/img/coverSong.png"></div> 
+                        <div class="songName">[SONG NAME 1] • </div>        
+                        <div class="songArtist"> [ARTIST]</div> 
+                        <div class="aggiungi">+ADD</div>
+                    </div>
+        
+                    <div class="button">CREA</div>
+                    </div>
+                    </div>
+                </div>
+            </div>   
         </div>
-    </div>   
-</div>
-
 
 <script type="text/javascript" src="static/js/index.js"></script>
 
