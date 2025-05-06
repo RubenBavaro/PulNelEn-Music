@@ -9,14 +9,13 @@ public class LoginManager {
         this.filePath = filePath;
     }
 
-    public boolean isFirstLogin() throws IOException {
+    public boolean isFirstLogin() {
         File f = new File(filePath);
         return !f.exists() || f.length() == 0;
     }
 
     public void registerFirstUser(String username) throws IOException {
         try (FileWriter w = new FileWriter(filePath, false)) {
-            // write only username
             w.write(username);
         }
     }

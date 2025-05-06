@@ -14,20 +14,20 @@
         <div class="login-container">
             <div class="login-card">
                 <h1 class="login-title">Log in</h1>
-                <form action="login" method="post">
+                <form id="loginForm">
                     <div class="mb-4">
                         <label for="username" class="form-label">Nome & Cognome</label>
-                        <input type="text" class="form-control" id="username" required aria-label="Enter your name" placeholder="Il tuo nome e il tuo cognome">
+                        <input type="text" class="form-control" id="username" name="username" required aria-label="Enter your name" placeholder="Il tuo nome e il tuo cognome">
                     </div>
                     <div class="mb-4">
                         <div class="d-flex justify-content-between align-items-center mb-1">
                             <label for="password" class="form-label mb-0">Password</label>
-                            <button type="button" class="password-toggle" aria-label="Toggle password visibility">
+                            <button type="button" class="password-toggle"  aria-label="Toggle password visibility">
                                 <img src="static/img/hide.png" alt="Toggle visibility" width="24" height="24">
-                                <span>Hide</span>
+                                <span>Show</span>
                             </button>
                         </div>
-                        <input type="password" class="form-control" class="password" id="password" required aria-label="Enter your password" placeholder="La password universale del sito">
+                        <input type="password" class="form-control" name="password" id="password" required aria-label="Enter your password" placeholder="La password universale del sito">
                     </div>
                     <button type="submit" class="btn btn-login btn-primary" id="login">Login</button>
                     <p class="terms-text">

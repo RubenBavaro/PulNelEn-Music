@@ -1,3 +1,4 @@
+
 document.querySelector('.password-toggle').addEventListener('click', function() {
     const passwordInput = document.getElementById('password');
     const toggleText = this.querySelector('span');
@@ -9,3 +10,28 @@ document.querySelector('.password-toggle').addEventListener('click', function() 
         toggleText.textContent = 'Show'; 
     }
 });
+
+document.getElementById('loginForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const data = new URLSearchParams();
+    data.append('username', username.value);
+    data.append('password', password.value);
+
+    fetch('api/login', { method: 'POST', body: data })
+        .then(r => r.json().then(b => ({ status: r.status, body: b })))
+        .then(({status, body}) => {
+            if (status === 200 && body.success) {
+                localStorage.setItem('storageName', 'true');
+                window.location.replace("index.html");
+                Login = "true";
+                localStorage.setItem("storageName", Login);
+            } else {
+                Login = "false";
+                localStorage.setItem("storageName", Login);
+                alert('Credenziali non valide!');
+            }
+        })
+        .catch(()=> alert('Errore di rete'));
+
+});
+

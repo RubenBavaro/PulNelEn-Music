@@ -44,3 +44,36 @@ document.addEventListener('DOMContentLoaded', function() {
             navbarDropdown.classList.remove('show');
         }
     });
+
+
+
+
+
+window.addEventListener("DOMContentLoaded", () => {
+    const loginStatus = localStorage.getItem("storageName");
+
+    const logInDiv = document.getElementById("logIn");
+    const logInLink = document.querySelector("a[href='login.html']");
+
+    if (loginStatus === "true") {
+        if (loginStatus){
+            if (logInLink) {
+                console.log("logged in")
+                logInLink.removeAttribute("href");
+                logInLink.style.cursor = "default";
+            }
+
+            fetch("getUser")
+                .then(r => r.text())
+                .then(username => {
+                    logInDiv.innerHTML = `
+          <span class="username">${username}</span>
+          <img src="static/img/account_circle.png" alt="Account">`;
+                })
+                .catch(err => console.error("Failed to fetch user:", err));
+        }
+
+    } else {
+        console.log("User is not logged in");
+    }
+});

@@ -1,9 +1,7 @@
 package com.example.pulnelenmusic;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.util.*;
-import java.util.stream.Collectors;
+
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -15,7 +13,7 @@ import jakarta.servlet.http.HttpSession;
 @WebServlet(name = "LoginServlet", value = "/login")
 public class LoginServlet extends HttpServlet {
     private static final String LOGIN_FILE = "C:\\login.txt";
-    private LoginManager loginManager = new LoginManager(LOGIN_FILE);
+    private final LoginManager loginManager = new LoginManager(LOGIN_FILE);
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -23,7 +21,7 @@ public class LoginServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException {
         response.setContentType("text/html;charset=UTF-8");
         String username = request.getParameter("username");
         String password = request.getParameter("password");
@@ -50,3 +48,5 @@ public class LoginServlet extends HttpServlet {
         }
     }
 }
+
+
