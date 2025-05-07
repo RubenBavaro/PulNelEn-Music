@@ -263,7 +263,7 @@
     cursor: pointer;
 }
 
-#addSong{
+.addSong{
     display: flex;
     flex-direction: row;
     padding: 0;

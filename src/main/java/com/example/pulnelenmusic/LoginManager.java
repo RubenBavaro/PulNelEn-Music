@@ -9,6 +9,11 @@ public class LoginManager {
         this.filePath = filePath;
     }
 
+    public String getFilePath() {
+        return filePath;
+    }
+
+
     public boolean isFirstLogin() {
         File f = new File(filePath);
         return !f.exists() || f.length() == 0;
@@ -24,7 +29,6 @@ public class LoginManager {
         try (BufferedReader r = new BufferedReader(new FileReader(filePath))) {
             String storedUser = r.readLine();
             if (storedUser == null) return false;
-            // password always fixed
             return storedUser.trim().equals(user) && "4ITIA123".equals(pass);
         }
     }
