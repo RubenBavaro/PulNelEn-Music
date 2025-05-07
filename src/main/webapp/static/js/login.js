@@ -11,6 +11,7 @@ document.querySelector('.password-toggle').addEventListener('click', function() 
     }
 });
 
+
 document.getElementById('loginForm').addEventListener('submit', function(e) {
     e.preventDefault();
     const data = new URLSearchParams();
@@ -26,6 +27,8 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
                 Login = "true";
                 localStorage.setItem("storageName", Login);
             } else {
+                localStorage.setItem('storageName', 'false');
+                window.location.replace("index.html");
                 Login = "false";
                 localStorage.setItem("storageName", Login);
                 alert('Credenziali non valide!');
