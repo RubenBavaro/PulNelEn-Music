@@ -38,3 +38,14 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
 
 });
 
+document.querySelectorAll('.addedSongs').forEach(el => {
+    el.style.cursor = 'pointer';
+    el.addEventListener('click', () => {
+      const src = el.getAttribute('data-src');
+      if (!src) {
+        alert('File non trovato per questo brano');
+        return;
+      }
+      window.location.href = `player.html?song=${encodeURIComponent(src)}`;
+    });
+  });

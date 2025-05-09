@@ -10,7 +10,7 @@ import java.util.Collections;
 import java.util.List;
 
 @WebServlet("/api/playlist")
-public class PlaylistApiServlet extends HttpServlet {
+public class PlaylistAPIServlet extends HttpServlet {
     private PlaylistManager pm = new PlaylistManager("C:\\\\playlists.txt");
 
     @Override
@@ -24,6 +24,5 @@ public class PlaylistApiServlet extends HttpServlet {
                 .map(Playlist::getSongs)
                 .orElse(Collections.emptyList());
         resp.setContentType("application/json;charset=UTF-8");
-        new Gson().toJson(songs, resp.getWriter());
     }
 }

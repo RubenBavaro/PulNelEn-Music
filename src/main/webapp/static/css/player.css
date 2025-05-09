@@ -155,6 +155,14 @@ border-radius: 50px;
     align-items:flex-start;
 }
 
+#volumeIcon{
+    cursor: pointer;
+}
+
+#playPauseBtn{
+    cursor: pointer;
+}
+
 @media (max-width: 1920px) {
     #black {
         position: static;
