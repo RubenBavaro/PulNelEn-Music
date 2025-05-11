@@ -40,6 +40,18 @@ document.addEventListener("DOMContentLoaded", () => {
         if (song.cover) coverImg.src = song.cover;
 
         if (!audio.paused) audio.play();
+
+        fetch('/api/playlist/last-played', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            body: new URLSearchParams({
+                title: song.title,
+                artist: song.artist,
+                genre: song.genre,
+                filePath: song.src,
+                coverPath: song.cover
+            })
+        })
     }
 });
 playPauseBtn.addEventListener("click", () => {

@@ -1,12 +1,11 @@
-
-document.querySelectorAll("#addSong .aggiungi").forEach(button => {
-    button.addEventListener("click", function () {
-        const songName = this.parentElement.querySelector(".songName").textContent.trim();
-        const artist = this.parentElement.querySelector(".songArtist").textContent.trim();
+document.querySelectorAll(".aggiungi").forEach(button => {
+    button.addEventListener("click", function() {
+        const songName = this.dataset.title;
+        const artist = this.dataset.artist;
+        const genre = this.dataset.genre;
         const playlistName = document.querySelector(".list input").value;
-        const genre = prompt("Inserisci il genere della canzone:");
 
-        fetch("addSong", {
+        fetch("/api/playlist/add", {
             method: "POST",
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
             body: new URLSearchParams({
@@ -16,11 +15,20 @@ document.querySelectorAll("#addSong .aggiungi").forEach(button => {
                 genre: genre
             })
         })
-        .then(res => res.text())
-        .then(alert)
-        .catch(err => {
-            console.error("Errore nell'aggiunta:", err);
-            alert("Errore durante l'aggiunta.");
-        });
+            .then(res => res.json())
+            .then(data => {
+                if(data.status === "success") {
+                    // Add song to UI
+                    const newSong = document.createElement('div');
+                    newSong.className = 'addedSongs';
+                    newSong.innerHTML = `
+                    <div class="songCover"><img src="static/img/coverSong1.png"></div>
+                    <div class="nameSong">${songName}</div>
+                    <div class="genreSong">${genre}</div>
+                    <img src="static/img/more.png" class="more" onclick="toggleRemove(this)">
+                `;
+                    document.querySelector('.row').appendChild(newSong);
+                }
+            });
     });
 });

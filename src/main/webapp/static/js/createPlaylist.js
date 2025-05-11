@@ -1,22 +1,23 @@
+document.addEventListener('DOMContentLoaded', function() {
+    const createButton = document.querySelector('.button');
+    const playlistNameInput = document.querySelector('.list input');
 
-document.querySelector(".button").addEventListener("click", function () {
-    const playlistName = document.querySelector(".list input").value;
-    if (!playlistName) {
-        alert("Inserisci un nome per la playlist");
-        return;
-    }
+    createButton.addEventListener('click', function() {
+        const playlistName = playlistNameInput.value;
+        const songs = Array.from(document.querySelectorAll('.nameSong'))
+            .map(el => el.textContent + "||"); // Add pipe separators
 
-    fetch("createPlaylist", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams({ name: playlistName })
-    })
-    .then(res => res.text())
-    .then(res => {
-        alert(res);
-    })
-    .catch(err => {
-        console.error("Errore nella creazione della playlist:", err);
-        alert("Errore durante la creazione.");
+        const params = new URLSearchParams();
+        params.append('name', playlistName);
+        songs.forEach(song => params.append('songs', song));
+
+        fetch('/api/playlist', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            body: params
+        })
+            .then(response => response.json())
+            .then(data => alert(data.message))
+            .catch(error => console.error('Error:', error));
     });
 });
