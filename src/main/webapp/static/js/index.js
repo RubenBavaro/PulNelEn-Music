@@ -13,23 +13,6 @@ function removeSong(removeButton) {
     songElement.remove();
     removeButton.remove();
 }
-document.addEventListener('DOMContentLoaded', function() {
-    const searchInputs = document.querySelectorAll('.search-input');
-    
-    searchInputs.forEach(input => {
-        input.addEventListener('click', function() {
-            if (this.value === this.getAttribute('placeholder')) {
-                this.value = '';
-            }
-        });
-        
-        input.addEventListener('blur', function() {
-            if (this.value === '') {
-                this.value = this.getAttribute('placeholder');
-            }
-        });
-    });
-});
 
     const navbarToggle = document.getElementById('navbarToggle');
     const navbarDropdown = document.getElementById('navbarDropdown');
@@ -87,7 +70,6 @@ document.addEventListener('DOMContentLoaded', function() {
         document.body.appendChild(playlistModal);
     }
     
-    // Set up event listeners for playlist books
     const playlistBooks = document.querySelectorAll('.playlist-book');
     
     playlistBooks.forEach(book => {
@@ -95,8 +77,6 @@ document.addEventListener('DOMContentLoaded', function() {
             e.stopPropagation();
             const playlistName = this.querySelector('.playlist-name').textContent;
             
-            // In a real implementation, this would fetch from your backend
-            // For now, we'll use the example data from the playlist book
             const mockSongs = [
                 { 
                     title: "OLLY - Balorda Nostalgia", 
@@ -118,22 +98,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             ];
             
-            // Instead of making an actual API call, we'll use the mock data
-            // In a real implementation, you would use the fetch API:
-            /*
-            fetch(`/api/playlist?name=${encodeURIComponent(playlistName)}`)
-                .then(response => response.json())
-                .then(songs => {
-                    showPlaylistSongs(playlistName, songs);
-                })
-                .catch(error => console.error('Error:', error));
-            */
             
             showPlaylistSongs(playlistName, mockSongs);
         });
     });
     
-    // Close modal when clicking outside the content
     document.addEventListener('click', function(e) {
         if (playlistModal.classList.contains('active') && 
             !e.target.closest('.modal-content') &&
@@ -142,7 +111,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Handle ESC key to close modal
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape' && playlistModal.classList.contains('active')) {
             playlistModal.classList.remove('active');
@@ -150,11 +118,9 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// Function to show playlist songs in modal
 function showPlaylistSongs(playlistName, songs) {
     const modal = document.querySelector('.playlist-modal');
     
-    // Clear previous content and create new modal structure
     modal.innerHTML = `
         <div class="modal-content">
             <h3>${playlistName}</h3>
@@ -163,7 +129,6 @@ function showPlaylistSongs(playlistName, songs) {
         </div>
     `;
     
-    // Add songs to the container
     const container = modal.querySelector('.songs-container');
     songs.forEach(song => {
         const songElement = document.createElement('div');
@@ -181,10 +146,8 @@ function showPlaylistSongs(playlistName, songs) {
         container.appendChild(songElement);
     });
     
-    // Show modal
     modal.classList.add('active');
     
-    // Add close button functionality
     const closeBtn = modal.querySelector('.close-modal');
     closeBtn.addEventListener('click', function() {
         modal.classList.remove('active');

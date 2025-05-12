@@ -18,7 +18,6 @@ document.querySelectorAll(".aggiungi").forEach(button => {
             .then(res => res.json())
             .then(data => {
                 if(data.status === "success") {
-                    // Add song to UI
                     const newSong = document.createElement('div');
                     newSong.className = 'addedSongs';
                     newSong.innerHTML = `

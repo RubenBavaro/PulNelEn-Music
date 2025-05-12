@@ -6,11 +6,12 @@
     <title>PulNelEn-HOMEPAGE</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="static/css/index.css"/>
+    <link rel="stylesheet" type="text/css" href="static/css/createSongModal.css"/>
 </head>
 <body>
-    <div id="hero">  
-        <div class="shade"></div> 
-            <div id="content">
+            <div id="hero">
+                <div class="shade"></div>
+                <div id="content">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-1">
@@ -37,7 +38,7 @@
                         </div>
                     </div>
                 </div>
-            
+
             <div class="divider-line"></div>
                 <div class="container-fluid">
                     <div class="row">
@@ -74,7 +75,7 @@
                             </div>
                             <div class="remove" onclick="removeSong(this)">Rimuovi</div>
                         </div>
-        
+
                         <!--  Third Song -->
                         <div class="col-2" style="position: relative;">
                             <div class="addedSongs" style="margin-left: 20px;">
@@ -89,50 +90,50 @@
 
                                 </div>
                               </div>
-                        
+
                     </div>
                 </div>
                 <div class="line"></div>
-        
+
                 <div class="container-fluid">
                     <div class="row">
                     <div class="col-2 offset-1">
                         <p class="add" style="font-size: 25px;">Nome playlist:</p>
-                        <div class="name">  
+                        <div class="name">
                             <p class="list">
                                 <img src="static/img/modify.png">
                                 <input type="text" class="search-input" placeholder="4ITIA-A" value="4ITIA-A">
                             </p>
                         </div>
-        
-        
+
+
                     <p class="add" style="font-size: 25px; margin-top: 104px;">Aggiungi canzoni:</p>
                     <div id="select">
                         <img src="static/img/search.png" class="search-icon">
                         <input type="search" class="search-input" placeholder="Seleziona la canzone da aggiungere" value="Seleziona la canzone da aggiungere">
                     </div>
-                    
+
                     <div class="addSong">
-                        <div class="cover"><img src="static/img/coverSong.png"></div> 
+                        <div class="cover"><img src="static/img/coverSong.png"></div>
                         <div class="songName">Battito •</div>
                         <div class="songArtist"> Fedez</div>
-                        <div class="aggiungi">+ADD</div>
+                        <div class="aggiungi" data-title="Battito" data-artist="Fedez" data-genre="Pop">+ADD</div>
                     </div>
-        
+
                     <div class="addSong">
-                        <div class="cover"><img src="static/img/coverSong.png"></div> 
+                        <div class="cover"><img src="static/img/coverSong.png"></div>
                         <div class="songName">Un ragazzo una ragazza • </div>
                         <div class="songArtist"> The Kolors</div>
-                        <div class="aggiungi">+ADD</div>
+                        <div class="aggiungi" data-title="Un ragazzo una ragazza" data-artist="The Kolors" data-genre="Pop">+ADD</div>
                     </div>
-        
+
                     <div class="button">CREA</div>
                     </div>
                     </div>
                 </div>
-            </div>   
+            </div>
         </div>
-
+    </div>
     <div class="playlist-modal">
     </div>
 
@@ -142,5 +143,6 @@
     <script type="text/javascript" src="static/js/createPlaylist.js"></script>
     <script type="text/javascript" src="static/js/addSong.js"></script>
     <script type="text/javascript" src="static/js/removeSong.js"></script>
+    <script type="text/javascript" src="static/js/createSongModal.js"></script>
 </body>
 </html>
