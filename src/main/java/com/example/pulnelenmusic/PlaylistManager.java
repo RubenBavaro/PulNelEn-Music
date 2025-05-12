@@ -2,38 +2,63 @@ package com.example.pulnelenmusic;
 
 import java.io.*;
 import java.nio.file.Files;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
+/**
+ * Manages reading and writing of playlists to a text file.
+ * Each line in the file is one playlist record in the format:
+ *     user;playlistName;songRecord|songRecord|...
+ */
 public class PlaylistManager {
     private final String filePath;
-    private String newLine = System.lineSeparator();
-
+    String newLine;
     public PlaylistManager(String filePath) {
         this.filePath = filePath;
+        // Ensure the file (and containing directories) exist
+        File file = new File(filePath);
         try {
-            File file = new File(filePath);
             if (!file.exists()) {
-                file.getParentFile().mkdirs();
+                File parent = file.getParentFile();
+                if (parent != null) parent.mkdirs();
                 file.createNewFile();
-                initializeDefaultSongs();
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Could not initialize playlists file", e);
         }
     }
 
-    private void initializeDefaultSongs() throws IOException {
-        // Add 5 default songs
-        try (FileWriter writer = new FileWriter(filePath, true)) {
-            writer.write("default;Default Songs;" +
-                    "Battito,Fedez,Pop,static/audio/song1.mp4,static/img/coverSong.png|" +
-                    "Un ragazzo una ragazza,The Kolors,Pop,static/audio/song2.mp4,static/img/coverSong.png|" +
-                    "La cura per me,Giorgia,Pop,static/audio/song3.mp4,static/img/coverSong1.png|" +
-                    "Balorda Nostalgia,OLLY,Power ballad pop,static/audio/song4.mp4,static/img/coverSong1.png|" +
-                    "Damme 'na mano,Tony Effe,Pop,static/audio/song5.mp4,static/img/coverSong1.png" +
-                    newLine);
+    /**
+     * Appends a new playlist record to playlists.txt
+     * (Uses Playlist.toRecord() under the hood, which yields "user;name;...").
+     */
+    public void addPlaylist(Playlist playlist) throws IOException {
+        try (FileWriter fw = new FileWriter(filePath, /* append */ true);
+             BufferedWriter bw = new BufferedWriter(fw)) {
+            bw.write(playlist.toRecord());
+            bw.newLine();
         }
     }
+
+    /**
+     * Reads all playlists from the file, reconstructs Playlist objects,
+     * and returns only those belonging to the given user.
+     */
+    public List<Playlist> getUserPlaylists(String user) throws IOException {
+        List<Playlist> result = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                Playlist p = Playlist.fromRecord(line);
+                if (p.getUser().equals(user)) {
+                    result.add(p);
+                }
+            }
+        }
+        return result;
+    }
+
 
     public List<Song> getDefaultSongs() throws IOException {
         List<Song> defaultSongs = new ArrayList<>();
@@ -55,18 +80,6 @@ public class PlaylistManager {
         return defaultSongs;
     }
 
-    public List<Playlist> getUserPlaylists(String user) throws IOException {
-        List<Playlist> list = new ArrayList<>();
-        try (BufferedReader r = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            while ((line = r.readLine()) != null) {
-                if (line.startsWith(user + ";") && !line.split(";", 2)[1].startsWith("LASTPLAYED")) {
-                    list.add(Playlist.fromRecord(line));
-                }
-            }
-        }
-        return list;
-    }
 
     public void createPlaylist(Playlist playlist) throws IOException {
         try (FileWriter writer = new FileWriter(filePath, true)) {
