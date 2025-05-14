@@ -71,6 +71,12 @@ document.addEventListener('DOMContentLoaded', function() {
     if (e.target === songModal) closeCreateSongModal();
     if (e.target === playlistModal) closeSelectPlaylistModal();
   });
+      let idk = true;
+  do {
+      pl.songs.push(fullTitle);
+        renderBookshelf();
+        closeSelectPlaylistModal();
+  } while (idk===true);
 
   // In‐memory playlists (will be synced on create and on add‐song)
   let playlists = [
