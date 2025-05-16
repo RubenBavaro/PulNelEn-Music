@@ -87,51 +87,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.body.appendChild(playlistModal);
     }
     
-    // Set up event listeners for playlist books
-    const playlistBooks = document.querySelectorAll('.playlist-book');
-    
-    playlistBooks.forEach(book => {
-        book.addEventListener('click', function(e) {
-            e.stopPropagation();
-            const playlistName = this.querySelector('.playlist-name').textContent;
-            
-            // In a real implementation, this would fetch from your backend
-            // For now, we'll use the example data from the playlist book
-            const mockSongs = [
-                { 
-                    title: "OLLY - Balorda Nostalgia", 
-                    artist: "OLLY", 
-                    genre: "Power ballad pop", 
-                    coverPath: "static/img/coverSong1.png" 
-                },
-                { 
-                    title: "Tony Effe – Damme 'na mano", 
-                    artist: "Tony Effe", 
-                    genre: "Pop", 
-                    coverPath: "static/img/coverSong1.png" 
-                },
-                { 
-                    title: "Giorgia – La cura per me", 
-                    artist: "Giorgia", 
-                    genre: "Pop", 
-                    coverPath: "static/img/coverSong1.png" 
-                }
-            ];
-            
-            // Instead of making an actual API call, we'll use the mock data
-            // In a real implementation, you would use the fetch API:
-            /*
-            fetch(`/api/playlist?name=${encodeURIComponent(playlistName)}`)
-                .then(response => response.json())
-                .then(songs => {
-                    showPlaylistSongs(playlistName, songs);
-                })
-                .catch(error => console.error('Error:', error));
-            */
-            
-            showPlaylistSongs(playlistName, mockSongs);
-        });
-    });
+
     
     // Close modal when clicking outside the content
     document.addEventListener('click', function(e) {
