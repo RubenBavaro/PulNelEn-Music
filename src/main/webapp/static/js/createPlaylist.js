@@ -23,7 +23,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Grab your song names (drop the "||" suffix)
     const songs = Array.from(document.querySelectorAll('.nameSong'))
-        .map(el => el.textContent.trim());
+        .map(el => {
+          const songName = el.textContent.trim();
+          const genreEl = el.nextElementSibling;
+          const genre = genreEl ? genreEl.textContent.trim() : 'Pop';
+          return { title: songName, genre: genre };
+        });
 
     console.log('→ Sending payload:', { name: playlistName, songs });
 
@@ -41,7 +46,6 @@ document.addEventListener('DOMContentLoaded', function() {
       console.log('← Full API payload:', payload);
 
       if (isSuccess(payload)) {
-        // Success! Render the new playlist book.
         const newBook = document.createElement('div');
         newBook.className = 'playlist-book';
         newBook.innerHTML = `
@@ -56,8 +60,8 @@ document.addEventListener('DOMContentLoaded', function() {
                   <div class="songCover">
                     <img src="static/img/coverSong1.png" alt="Cover">
                   </div>
-                  <div class="nameSong">${song}</div>
-                  <div class="genreSong">Genre</div>
+                  <div class="nameSong">${song.title}</div>
+                  <div class="genreSong">${song.genre}</div>
                   <img src="static/img/more.png" class="more" onclick="toggleRemove(this)">
                 </div>
                 <div class="remove" onclick="removeSong(this)">Rimuovi</div>
@@ -69,14 +73,18 @@ document.addEventListener('DOMContentLoaded', function() {
         newBook.addEventListener('click', e => {
           e.stopPropagation();
           const name = newBook.querySelector('.playlist-name').textContent;
-          const mockSongs = Array.from(newBook.querySelectorAll('.nameSong'))
-              .map(el => ({
-                title: el.textContent,
-                artist: 'Unknown',
-                genre: 'Unknown',
-                coverPath: 'static/img/coverSong1.png'
-              }));
-          showPlaylistSongs(name, mockSongs);
+          const songsList = Array.from(newBook.querySelectorAll('.nameSong'))
+              .map(el => {
+                const title = el.textContent;
+                const genreEl = el.nextElementSibling;
+                return {
+                  title: title,
+                  artist: title.includes('-') ? title.split('-')[0].trim() : 'Unknown',
+                  genre: genreEl ? genreEl.textContent : 'Pop',
+                  coverPath: 'static/img/coverSong1.png'
+                };
+              });
+          showPlaylistSongs(name, songsList);
         });
 
         playlistBookshelf.appendChild(newBook);

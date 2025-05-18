@@ -68,9 +68,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // In-memory playlists
   let playlists = [
-    { name: '4ITIA-A',    songs: ['OLLY - Balorda Nostalgia', 'Tony Effe - Damme \'na mano', 'Giorgia - La cura per me'] },
-    { name: 'Workout Mix', songs: ['Battito - Fedez'] },
-    { name: 'Chill Vibes', songs: [] }
+    { 
+      name: '4ITIA-A',    
+      songs: [
+        { title: 'OLLY - Balorda Nostalgia', artist: 'OLLY', genre: 'Power ballad pop' },
+        { title: 'Tony Effe - Damme \'na mano', artist: 'Tony Effe', genre: 'Pop' },
+        { title: 'Giorgia - La cura per me', artist: 'Giorgia', genre: 'Pop' }
+      ]
+    },
+    { 
+      name: 'Workout Mix', 
+      songs: [{ title: 'Battito - Fedez', artist: 'Fedez', genre: 'Pop' }]
+    },
+    { 
+      name: 'Chill Vibes', 
+      songs: [] 
+    }
   ];
 
   // Redraw bookshelf
@@ -83,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function() {
       book.style.margin = '0 10px';
 
       const pagesInner = pl.songs.length > 0
-          ? pl.songs.map(song => `<div class="page-line">${song}</div>`).join('')
+          ? pl.songs.map(song => `<div class="page-line">${song.title}</div>`).join('')
           : '<div class="no-songs">Nessuna canzone</div>';
 
       book.innerHTML = `
@@ -97,9 +110,13 @@ document.addEventListener('DOMContentLoaded', function() {
       `;
       book.addEventListener('click', e => {
         e.stopPropagation();
-        showPlaylistSongs(pl.name, pl.songs.map(t => {
-          const [title, artist] = t.split(' - ');
-          return { title, artist, genre: 'Unknown', coverPath: 'static/img/coverSong1.png' };
+        showPlaylistSongs(pl.name, pl.songs.map(song => {
+          return { 
+            title: song.title, 
+            artist: song.artist || 'Unknown Artist', 
+            genre: song.genre || 'Pop', 
+            coverPath: 'static/img/coverSong1.png' 
+          };
         }));
       });
       playlistBookshelf.appendChild(book);
@@ -119,9 +136,9 @@ document.addEventListener('DOMContentLoaded', function() {
       playlists.push({ name, songs: [] });
       renderBookshelf();
       playlistNameInput.value = '';
-      alert(`Playlist "${name}" creata con successo!`);
+      console.log(`Playlist "${name}" creata con successo!`);
     } catch {
-      alert('Errore durante la creazione della playlist');
+      console.log('Errore durante la creazione della playlist');
     }
   });
 
@@ -143,7 +160,7 @@ document.addEventListener('DOMContentLoaded', function() {
       showSelectPlaylistModal({
         title:  e.target.dataset.title,
         artist: e.target.dataset.artist,
-        genre:  e.target.dataset.genre
+        genre:  e.target.dataset.genre || 'Pop'
       });
     }
   });
@@ -152,7 +169,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const list = document.getElementById('playlistList');
     list.innerHTML = '';
     playlists.forEach(pl => {
-      const present = pl.songs.some(s => s.toLowerCase() === `${songData.title} - ${songData.artist}`.toLowerCase());
+      const fullTitle = `${songData.title} - ${songData.artist}`;
+      const present = pl.songs.some(s => s.title.toLowerCase() === fullTitle.toLowerCase());
       const item = document.createElement('div');
       item.className = 'playlist-modal-item';
       item.innerHTML = `
@@ -171,7 +189,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const playlistName = this.dataset.playlist;
         const fullTitle = `${songData.title} - ${songData.artist}`;
         const target = playlists.find(p => p.name === playlistName);
-        target.songs.push(fullTitle);
+        target.songs.push({
+          title: fullTitle,
+          artist: songData.artist,
+          genre: songData.genre || 'Pop'
+        });
         renderBookshelf();
         this.disabled = true;
         this.textContent = 'Già Presente';

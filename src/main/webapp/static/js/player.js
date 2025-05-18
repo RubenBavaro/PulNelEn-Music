@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 playPauseBtn.addEventListener("click", () => {
     if (audio.paused) {
-        audio.play();
+        audio.play("static/audio/Fedez - BATTITO.mp3");
         playPauseBtn.src = "static/img/pause.png";
         playPauseBtn.alt = "Pause";
     } else {
