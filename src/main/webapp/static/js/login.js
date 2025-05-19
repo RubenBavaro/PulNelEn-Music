@@ -11,7 +11,6 @@ document.querySelector('.password-toggle').addEventListener('click', function() 
     }
 });
 
-
 document.getElementById('loginForm').addEventListener('submit', function(e) {
     e.preventDefault();
     const data = new URLSearchParams();

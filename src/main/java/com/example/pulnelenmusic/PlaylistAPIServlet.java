@@ -9,7 +9,8 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet(name = "PlaylistAPIServlet", value = "api/playlist")
+// Fixed: Added leading slash to the URL pattern
+@WebServlet(name = "PlaylistAPIServlet", value = "/api/playlist")
 public class PlaylistAPIServlet extends HttpServlet {
     private final PlaylistManager pm = new PlaylistManager("C:\\\\playlists.txt");
     private final Gson gson = new Gson();
@@ -18,6 +19,11 @@ public class PlaylistAPIServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setContentType("application/json;charset=UTF-8");
         String user = (String) req.getSession().getAttribute("user");
+
+        // Default to guest user if not logged in
+        if (user == null || user.isEmpty()) {
+            user = "guest";
+        }
 
         try {
             // 1) Parse JSON request-body
@@ -34,7 +40,7 @@ public class PlaylistAPIServlet extends HttpServlet {
             // 3) Persist it
             pm.addPlaylist(newPlaylist);
 
-            // 4) Return empty array as “success” for the frontend
+            // 4) Return empty array as "success" for the frontend
             resp.getWriter().write("[]");
         } catch (Exception e) {
             e.printStackTrace();

@@ -13,7 +13,8 @@ import java.util.Random;
  */
 public class PlaylistManager {
     private final String filePath;
-    String newLine;
+    private final String newLine = System.lineSeparator(); // Initialize with system line separator
+
     public PlaylistManager(String filePath) {
         this.filePath = filePath;
         // Ensure the file (and containing directories) exist
@@ -28,6 +29,7 @@ public class PlaylistManager {
             throw new RuntimeException("Could not initialize playlists file", e);
         }
     }
+
 
     /**
      * Appends a new playlist record to playlists.txt

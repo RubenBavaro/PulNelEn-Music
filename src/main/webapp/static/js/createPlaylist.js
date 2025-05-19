@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('→ Sending payload:', { name: playlistName, songs });
 
     try {
-      const response = await fetch('api/playlist', {
+      const response = await fetch('/api/playlist', {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
         body:    JSON.stringify({ name: playlistName, songs })
