@@ -770,6 +770,17 @@ async function fetchSongDetails(songTitle) {
             return knownSongs["tony effe damme na mano"];
         }
 
+        if (title.toLowerCase().includes("balorda") || artist.toLowerCase().includes("olly")) {
+            return knownSongs["olly balorda nostalgia"];
+        }
+
+        if (title.toLowerCase().includes("battito") || artist.toLowerCase().includes("fedez")) {
+            return knownSongs["fedez battito"];
+        }
+        if (title.toLowerCase().includes("la cura") || artist.toLowerCase().includes("giorgia")) {
+            return knownSongs["giorgia la cura per me"];
+        }
+
         // Use our parsed information as last resort
         console.warn(`Song details not found for: ${songTitle}, using parsed information`);
         return {
