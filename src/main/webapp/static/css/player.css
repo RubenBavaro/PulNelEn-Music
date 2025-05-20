@@ -9,7 +9,6 @@
     z-index: 1;
 }
 
-
 .navbar-container {
     position: relative;
     display: inline-block;
@@ -60,27 +59,26 @@
 
 #black {
     position: static;
-    bottom: -312px;             
+    bottom: -312px;
     left:   0;
     width: 100%;
     height: 24.9%;
     padding-top: 20px;
     background: #000;
-    z-index: 1;  
-    padding-bottom: 100px;       
-
+    z-index: 1;
+    padding-bottom: 100px;
 }
 
 .divider-line {
     position: absolute;
-    bottom: -63px;         
+    bottom: -63px;
     left: 0;
     width: 100%;
-    height: 2px;            
+    height: 2px;
     background-color: white;
-    border: none;          
+    border: none;
     filter: blur(2px);
-    z-index: 2;            
+    z-index: 2;
 }
 
 .name{
@@ -116,26 +114,93 @@
     margin-left: 260px;
 }
 
+/* Progress bar container */
 .fullTime {
     width: 100%;
     height: 5px;
     background: #B3B3B3;
     border-radius: 50px;
     margin-top: 50px;
-    cursor: pointer;             /* make it clickable */
-    position: relative;          /* for proper hit area */
+    cursor: pointer;
+    position: relative;
 }
 
+/* Progress bar active portion */
 .actualTime {
-    margin-top: -5px;
-    width: 0%;                   /* start at 0% */
+    margin-left: 912px;
+    margin-top: 147px;    
+    width: 0%;
     height: 5px;
     background: #39FF14;
     border-radius: 50px;
-    cursor: pointer;             /* optional, shows draggable */
-    position: absolute;          /* position over .fullTime */
+    position: absolute;
     top: 0;
     left: 0;
+    pointer-events: none; 
+}
+
+/* New circular progress handle */
+.progress-handle {
+    position: relative;
+    margin-left: 30px;
+    margin-top: -2px;
+    width: 16px;
+    height: 16px;
+    background-color: #39FF14;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    cursor: grab;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    transition: transform 0.1s ease;
+    z-index: 3;
+    margin-left: 8px; /* Offset to align with the progress bar start */
+}
+
+.progress-handle:hover {
+    transform: translate(-50%, -50%) scale(1.2);
+}
+
+.progress-handle:active {
+    cursor: grabbing;
+    transform: translate(-50%, -50%) scale(1.2);
+}
+
+/* Time indicator on hover/drag */
+.hover-time-indicator {
+    position: absolute;
+    display: none;
+    background-color: #383838;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-family: 'Circular Spotify Text', 'Arial', sans-serif;
+    pointer-events: none;
+    z-index: 10;
+    text-align: center;
+    min-width: 40px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Current time and duration display */
+.fullTime::before {
+    content: attr(data-current-time);
+    position: absolute;
+    left: 0;
+    bottom: -22px;
+    color: #999999;
+    font-size: 12px;
+    font-family: 'Circular Spotify Text', 'Arial', sans-serif;
+}
+
+.fullTime::after {
+    content: attr(data-duration);
+    position: absolute;
+    right: 0;
+    bottom: -22px;
+    color: #999999;
+    font-size: 12px;
+    font-family: 'Circular Spotify Text', 'Arial', sans-serif;
 }
 
 .playback{
@@ -146,7 +211,7 @@
     margin-top: 22px;
     gap: 54px;
 }
-    
+
 .actualVolume{
     margin-left: 20px;
     margin-top: 40px;
@@ -170,30 +235,63 @@
     cursor: pointer;
 }
 
+#backBtn, #nextBtn {
+    cursor: pointer;
+}
+
+/* Custom styling for volume slider */
+input[type=range].actualVolume {
+    -webkit-appearance: none;
+    background: #B3B3B3;
+    height: 5px;
+    border-radius: 50px;
+    outline: none;
+}
+
+input[type=range].actualVolume::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #39FF14;
+    cursor: pointer;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+input[type=range].actualVolume::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #39FF14;
+    cursor: pointer;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    border: none;
+}
+
 @media (max-width: 1920px) {
     #black {
         position: static;
-        bottom: -312px;             
+        bottom: -312px;
         left:   0;
         width: 100%;
         height: 24.9%;
         padding-top: 20px;
         background: #000;
-        z-index: 1;  
-        padding-bottom: 100px;       
-    
+        z-index: 1;
+        padding-bottom: 100px;
+
     }
-    
+
     .divider-line {
         position: absolute;
-        bottom: -57px;         
+        bottom: -57px;
         left: 0;
         width: 100%;
-        height: 2px;            
+        height: 2px;
         background-color: white;
-        border: none;          
+        border: none;
         filter: blur(2px);
-        z-index: 2;            
+        z-index: 2;
     }
 
     .playback{
@@ -204,7 +302,7 @@
         margin-top: 22px;
         gap: 54px;
     }
-    
+
     .Volume{
         margin-top: 42px;
         display: flex;
@@ -217,45 +315,48 @@
         background: #B3B3B3;
         border-radius: 50px;
         margin-top: 35px;
-        }
-        
-        .actualTime{
-        margin-top: -5px;
-        width: 144px;
+    }
+
+    .actualTime{
+    margin-left: 557px;
+    margin-top: 132px;   
+        width: 0%;
         height: 5px;
         background: #39FF14;
         border-radius: 50px;
-        }
-        .name{
-            font-family: 'Kite One';
-            font-style: normal;
-            font-weight: 400;
-            font-size: 50px;
-            line-height: 72px;
-            text-align: left;
-            color: #FFFFFF;
-            margin-left: 170px;
-        }
-        
-        .author{
-            font-family: 'Kite One';
-            font-style: normal;
-            font-weight: 400;
-            font-size: 32px;
-            line-height: 46px;
-            text-align: left;
-            color: #999999;
-            margin-left: 170px;
-        }
-        
-        .genre{
-            font-family: 'Kite One';
-            font-style: normal;
-            font-weight: 400;
-            font-size: 32px;
-            line-height: 46px;
-            text-align: left;
-            color: #999999;
-            margin-left: 170px;
-        }
+        position: absolute;
+    }
+
+    .name{
+        font-family: 'Kite One';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 50px;
+        line-height: 72px;
+        text-align: left;
+        color: #FFFFFF;
+        margin-left: 170px;
+    }
+
+    .author{
+        font-family: 'Kite One';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 32px;
+        line-height: 46px;
+        text-align: left;
+        color: #999999;
+        margin-left: 170px;
+    }
+
+    .genre{
+        font-family: 'Kite One';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 32px;
+        line-height: 46px;
+        text-align: left;
+        color: #999999;
+        margin-left: 170px;
+    }
 }
