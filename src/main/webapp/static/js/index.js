@@ -144,36 +144,9 @@ function showPlaylistSongs(playlistName, songs) {
         playButton.addEventListener('click', function() {
             window.location.href = `player.html?song=${encodeURIComponent(song.title)}`;
         });
-        
-        // Add remove functionality
-        const removeButton = songElement.querySelector('.remove-song');
-        removeButton.addEventListener('click', function() {
-            // Remove from DOM
-            songElement.remove();
-            
-            // Remove from data
-            fetch("removeSong", {
-                method: "POST",
-                headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                body: new URLSearchParams({
-                    name: playlistName,
-                    song: song.title
-                })
-            })
-            .then(res => res.text())
-            .then(response => {
-                alert(`Song "${song.title}" removed from playlist "${playlistName}"`);
-                // If no songs left, close modal
-                if (container.children.length === 0) {
-                    modal.classList.remove('active');
-                }
-            })
-            .catch(err => {
-                console.error("Error removing song:", err);
-                alert("Error while removing the song.");
-            });
-        });
-        
+
+
+
         container.appendChild(songElement);
     });
     

@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function() {
           </div>
           <div class="book-pages">
             ${songs.map(song => `
-              <div class="col-2 offset-2" style="position: relative;">
+              <div class="col-2 offset-2" style="position: relative;" data-playlist-name="${playlistName}">
                 <div class="addedSongs" style="margin-left: 20px;">
                   <div class="songCover">
                     <img src="static/img/coverSong1.png" alt="Cover">

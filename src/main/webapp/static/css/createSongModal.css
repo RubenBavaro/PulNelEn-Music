@@ -192,3 +192,18 @@ body.modal-open {
         transform: translateY(0);
     }
 }
+
+.modal-song-card {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.modal-song-card.removing {
+    opacity: 0;
+    transform: translateX(-100%);
+}
+
+/* Add to CSS */
+.more, .remove {
+    z-index: 9999;
+    pointer-events: all !important;
+}
