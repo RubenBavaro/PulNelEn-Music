@@ -89,7 +89,7 @@
     line-height: 72px;
     text-align: left;
     color: #FFFFFF;
-    margin-left: 260px;
+    margin-left: 240px;
 }
 
 .author{
@@ -100,7 +100,7 @@
     line-height: 46px;
     text-align: left;
     color: #999999;
-    margin-left: 260px;
+    margin-left: 240px;
 }
 
 .genre{
@@ -111,10 +111,9 @@
     line-height: 46px;
     text-align: left;
     color: #999999;
-    margin-left: 260px;
+    margin-left: 240px;
 }
 
-/* Progress bar container */
 .fullTime {
     width: 100%;
     height: 5px;
@@ -125,35 +124,32 @@
     position: relative;
 }
 
-/* Progress bar active portion */
 .actualTime {
-    margin-left: 912px;
-    margin-top: 147px;    
     width: 0%;
     height: 5px;
-    background: #39FF14;
+    background: #00ff9d;
+    margin-top: -5px;
     border-radius: 50px;
-    position: absolute;
+    position: relative;
     top: 0;
     left: 0;
-    pointer-events: none; 
+    pointer-events: none;
+    transition: width 0.1s ease;
 }
 
-/* New circular progress handle */
 .progress-handle {
     position: relative;
-    margin-left: 30px;
     margin-top: -2px;
+    left: 0%;
     width: 16px;
     height: 16px;
-    background-color: #39FF14;
+    background-color: #00ff9d;
     border-radius: 50%;
     transform: translate(-50%, -50%);
     cursor: grab;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
     transition: transform 0.1s ease;
     z-index: 3;
-    margin-left: 8px; /* Offset to align with the progress bar start */
 }
 
 .progress-handle:hover {
@@ -165,7 +161,6 @@
     transform: translate(-50%, -50%) scale(1.2);
 }
 
-/* Time indicator on hover/drag */
 .hover-time-indicator {
     position: absolute;
     display: none;
@@ -182,7 +177,6 @@
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }
 
-/* Current time and duration display */
 .fullTime::before {
     content: attr(data-current-time);
     position: absolute;
@@ -212,14 +206,7 @@
     gap: 54px;
 }
 
-.actualVolume{
-    margin-left: 20px;
-    margin-top: 40px;
-    width: 330px;
-    height: 5px;
-    background: #39FF14;
-    border-radius: 50px;
-}
+
 
 .Volume{
     margin-top: 42px;
@@ -239,7 +226,6 @@
     cursor: pointer;
 }
 
-/* Custom styling for volume slider */
 input[type=range].actualVolume {
     -webkit-appearance: none;
     background: #B3B3B3;
@@ -247,13 +233,20 @@ input[type=range].actualVolume {
     border-radius: 50px;
     outline: none;
 }
-
+#volumeSlider{
+    margin-left: 20px;
+    margin-top: 40px;
+    width: 330px;
+    height: 5px;
+    background: #39FF14;
+    border-radius: 50px;
+}
 input[type=range].actualVolume::-webkit-slider-thumb {
     -webkit-appearance: none;
     width: 16px;
     height: 16px;
     border-radius: 50%;
-    background: #39FF14;
+    background: white;
     cursor: pointer;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
@@ -262,7 +255,7 @@ input[type=range].actualVolume::-moz-range-thumb {
     width: 16px;
     height: 16px;
     border-radius: 50%;
-    background: #39FF14;
+    background: #00ff9d;
     cursor: pointer;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
     border: none;
@@ -279,7 +272,6 @@ input[type=range].actualVolume::-moz-range-thumb {
         background: #000;
         z-index: 1;
         padding-bottom: 100px;
-
     }
 
     .divider-line {
@@ -317,14 +309,19 @@ input[type=range].actualVolume::-moz-range-thumb {
         margin-top: 35px;
     }
 
-    .actualTime{
-    margin-left: 557px;
-    margin-top: 132px;   
-        width: 0%;
-        height: 5px;
-        background: #39FF14;
-        border-radius: 50px;
-        position: absolute;
+    .progress-handle {
+        position: relative;
+        margin-top: -2px;
+        left: 0%;
+        width: 16px;
+        height: 16px;
+        background-color: #00ff9d;
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        cursor: grab;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+        transition: transform 0.1s ease;
+        z-index: 3;
     }
 
     .name{
@@ -335,7 +332,7 @@ input[type=range].actualVolume::-moz-range-thumb {
         line-height: 72px;
         text-align: left;
         color: #FFFFFF;
-        margin-left: 170px;
+        margin-left: 20%;
     }
 
     .author{
@@ -346,7 +343,7 @@ input[type=range].actualVolume::-moz-range-thumb {
         line-height: 46px;
         text-align: left;
         color: #999999;
-        margin-left: 170px;
+        margin-left: 20%;
     }
 
     .genre{
@@ -357,6 +354,7 @@ input[type=range].actualVolume::-moz-range-thumb {
         line-height: 46px;
         text-align: left;
         color: #999999;
-        margin-left: 170px;
+        margin-left: 20%;
+        margin-bottom: -30px;
     }
 }

@@ -1,11 +1,9 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize audio player and controls
     let flag = 0;
     let currentIndex = 0;
     let playlist = [];
     let isDragging = false;
 
-    // Get DOM elements only if they exist
     const audio = document.getElementById("audioPlayer");
     const playPauseBtn = document.getElementById("playPauseBtn");
     const backBtn = document.getElementById("backBtn");
@@ -19,13 +17,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const genreEl = document.querySelector(".genre");
     const coverImg = document.querySelector(".cover");
 
-    // Only initialize player on the player page
     if (!audio || !playPauseBtn) {
         console.log("Not on player page, audio controls not initialized");
-        return; // Exit early if we're not on the player page
+        return; 
     }
 
-    // Create progress handle if it doesn't exist
     let progressHandle = document.querySelector(".progress-handle");
     if (!progressHandle && actualTimeEl && fullTimeEl) {
         progressHandle = document.createElement("div");
@@ -33,105 +29,85 @@ document.addEventListener('DOMContentLoaded', function() {
         actualTimeEl.parentNode.appendChild(progressHandle);
     }
 
-    // Get song from URL parameters
     const params = new URLSearchParams(location.search);
     const songParam = params.get("song");
 
     if (songParam) {
-        // Check if it's a file path or song title
         if (songParam.includes("/") || songParam.includes("\\")) {
-            // It's a file path
             audio.src = songParam;
             const filename = songParam.split("/").pop().replace(/\.(mp3|mp4|wav)$/, "");
             titleEl.textContent = filename;
             artistEl.textContent = "";
             genreEl.textContent = "";
         } else {
-            // It's a song title - need to load details
             fetchSongDetails(songParam).then(song => {
                 titleEl.textContent = song.title || songParam;
                 artistEl.textContent = song.artist || "";
                 genreEl.textContent = song.genre || "";
 
-                // Use placeholder audio if no source is available
                 audio.src = song.filePath || "static/audio/placeholder.mp3";
 
-                // Update cover if available
                 if (song.coverPath) {
                     coverImg.src = song.coverPath;
                 }
 
-                // Try to build a mini-playlist of songs from the same artist
                 fetchRelatedSongs(song.artist).then(songs => {
                     if (songs && songs.length > 0) {
                         playlist = songs;
                         currentIndex = playlist.findIndex(s => s.title === song.title);
                         if (currentIndex === -1) currentIndex = 0;
                     } else {
-                        // Just add this song to the playlist
                         playlist = [song];
                         currentIndex = 0;
                     }
                 });
 
-                // Update last played
                 updateLastPlayed(song);
             });
         }
     } else {
-        // No song selected, load last played
         fetchLastPlayed().then(song => {
             if (song) {
                 titleEl.textContent = song.title || "Unknown Track";
                 artistEl.textContent = song.artist || "";
                 genreEl.textContent = song.genre || "";
 
-                // Use placeholder audio if no source is available
                 audio.src = song.filePath || "static/audio/placeholder.mp3";
 
-                // Update cover if available
                 if (song.coverPath) {
                     coverImg.src = song.coverPath;
                 }
 
-                // Add to playlist
                 playlist = [song];
                 currentIndex = 0;
             } else {
-                // Fallback to placeholder
-                titleEl.textContent = "Demo Track";
+                titleEl.textContent = "Default Song";
                 artistEl.textContent = "PulNelEn";
-                genreEl.textContent = "Demo";
+                genreEl.textContent = "Default";
                 audio.src = "static/audio/placeholder.mp3";
             }
         }).catch(error => {
             console.error("Error loading last played song:", error);
-            // Fallback to placeholder
-            titleEl.textContent = "Demo Track";
-            artistEl.textContent = "PulNelEn";
-            genreEl.textContent = "Demo";
+                titleEl.textContent = "Default Song";
+                artistEl.textContent = "PulNelEn";
+                genreEl.textContent = "Default";
             audio.src = "static/audio/placeholder.mp3";
         });
     }
 
-    // Add metadata loaded event to set the duration immediately when available
     audio.addEventListener("loadedmetadata", () => {
         if (fullTimeEl && !isNaN(audio.duration)) {
             fullTimeEl.textContent = formatTime(audio.duration);
         }
     });
 
-    // Add time update listener
     audio.addEventListener("timeupdate", updateProgressBar);
 
-    // Initialize progress bar click functionality
     if (fullTimeEl) {
-        // Click to seek
         fullTimeEl.addEventListener("click", function(e) {
             seek(e);
         });
 
-        // Show time preview on hover
         fullTimeEl.addEventListener("mousemove", function(e) {
             showSeekPreview(e);
         });
@@ -143,13 +119,12 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Make the progress handle draggable
     if (progressHandle) {
         progressHandle.addEventListener("mousedown", function(e) {
             isDragging = true;
             document.addEventListener("mousemove", handleDrag);
             document.addEventListener("mouseup", stopDrag);
-            e.preventDefault(); // Prevent text selection
+            e.preventDefault(); 
         });
     }
 
@@ -159,20 +134,16 @@ document.addEventListener('DOMContentLoaded', function() {
         const rect = fullTimeEl.getBoundingClientRect();
         let percentage = (e.clientX - rect.left) / rect.width;
 
-        // Clamp percentage between 0 and 1
         percentage = Math.max(0, Math.min(0.5, percentage));
 
-        // Update progress bar visually during drag
         if (actualTimeEl) {
             actualTimeEl.style.width = `${percentage * 100}%`;
         }
 
-        // Update handle position
         if (progressHandle) {
             progressHandle.style.left = `${percentage * 100}%`;
         }
 
-        // Show time preview during drag
         if (!isNaN(audio.duration)) {
             const previewTime = percentage * audio.duration;
             showTimePreview(e.clientX, previewTime);
@@ -182,7 +153,6 @@ document.addEventListener('DOMContentLoaded', function() {
     function stopDrag(e) {
         if (!isDragging) return;
 
-        // Set the actual audio time
         if (fullTimeEl && !isNaN(audio.duration)) {
             const rect = fullTimeEl.getBoundingClientRect();
             const percentage = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
@@ -195,17 +165,14 @@ document.addEventListener('DOMContentLoaded', function() {
         hideSeekPreview();
     }
 
-    // Play/Pause button
     playPauseBtn.addEventListener("click", () => {
         if (audio.readyState < 2) {
-            // Audio not loaded yet, use placeholder
             audio.src = "static/audio/placeholder.mp3";
         }
 
         if (audio.paused) {
             audio.play().catch(err => {
                 console.error("Error playing audio:", err);
-                // If there's an error with the current source, try with known working paths
                 tryPlaying();
             });
             playPauseBtn.src = "static/img/pause.png";
@@ -217,7 +184,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Volume control
     volumeSlider.addEventListener("input", () => {
         const raw = volumeSlider.value;
         const vol = parseFloat(raw);
@@ -238,11 +204,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Skip buttons
     backBtn.addEventListener("click", () => loadSong(currentIndex - 1));
     nextBtn.addEventListener("click", () => loadSong(currentIndex + 1));
 
-    // Mute toggle
     volumeIcon.addEventListener("click", () => {
         flag = flag + 1;
         if (flag === 1) {
@@ -272,23 +236,19 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // When song ends
     audio.addEventListener("ended", () => {
         playPauseBtn.src = "static/img/play.png";
         playPauseBtn.alt = "Play";
 
-        // Auto advance to next song
         if (playlist.length > 1) {
             loadSong(currentIndex + 1);
         }
     });
 
-    // Internal function to try playing with alternate paths
     function tryPlaying() {
         const title = titleEl.textContent;
         const artist = artistEl.textContent;
 
-        // Special case for "The Kolors - Un ragazzo una ragazza"
         if (artist.toLowerCase().includes("kolors") || title.toLowerCase().includes("ragazzo")) {
             console.log("Trying special case for The Kolors");
             audio.src = "static/audio/The Kolors - Un ragazzo una ragazza.mp3";
@@ -302,7 +262,6 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        // Special case for "Tony Effe - DAMME 'NA MANO"
         if (artist.toLowerCase().includes("tony") || title.toLowerCase().includes("damme")) {
             console.log("Trying special case for Tony Effe");
             audio.src = "static/audio/Tony-Effe-DAMME-_NA-MANO.mp3";
@@ -316,16 +275,13 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        // Try with other paths if specific cases fail
         tryAlternativePaths();
     }
 
     function tryAlternativePaths() {
-        // Generate hard-coded paths based on song info
         const title = titleEl.textContent;
         const artist = artistEl.textContent;
 
-        // Try with placeholder as fallback
         audio.src = "static/audio/placeholder.mp3";
         audio.play().then(() => {
             playPauseBtn.src = "static/img/pause.png";
@@ -335,7 +291,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Function to seek to a specific position in the song
     function seek(e) {
         if (!audio || !fullTimeEl) return;
 
@@ -345,19 +300,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (isNaN(audio.duration)) return;
 
-        // Calculate time based on percentage
         const seekTime = percentage * audio.duration;
 
-        // Set the current time
         audio.currentTime = seekTime;
 
-        // Update progress bar
         updateProgressBar();
     }
 
-    // Function to show time preview at a specific position
     function showTimePreview(x, time) {
-        // Get existing or create hover indicator
         let hoverIndicator = document.querySelector('.hover-time-indicator');
         if (!hoverIndicator) {
             hoverIndicator = document.createElement('div');
@@ -365,14 +315,12 @@ document.addEventListener('DOMContentLoaded', function() {
             document.querySelector('.playback').appendChild(hoverIndicator);
         }
 
-        // Position the indicator
         hoverIndicator.style.left = `${x - 20}px`;
         hoverIndicator.style.top = `${fullTimeEl.getBoundingClientRect().top - 25}px`;
         hoverIndicator.textContent = formatTime(time);
         hoverIndicator.style.display = 'block';
     }
 
-    // Function to show seek preview (time indicator)
     function showSeekPreview(e) {
         if (!audio || !fullTimeEl || isNaN(audio.duration)) return;
 
@@ -380,14 +328,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const offsetX = e.clientX - rect.left;
         const percentage = offsetX / rect.width;
 
-        // Calculate time based on percentage
         const previewTime = percentage * audio.duration;
 
-        // Show time preview
         showTimePreview(e.clientX, previewTime);
     }
 
-    // Function to hide seek preview
     function hideSeekPreview() {
         const hoverIndicator = document.querySelector('.hover-time-indicator');
         if (hoverIndicator) {
@@ -396,7 +341,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Format time in MM:SS
 function formatTime(seconds) {
     if (isNaN(seconds) || !isFinite(seconds)) return "0:00";
 
@@ -405,7 +349,6 @@ function formatTime(seconds) {
     return `${min}:${sec < 10 ? '0' : ''}${sec}`;
 }
 
-// Update progress bar and time displays
 function updateProgressBar() {
     const audio = document.getElementById("audioPlayer");
     const actualTimeEl = document.querySelector(".actualTime");
@@ -414,29 +357,24 @@ function updateProgressBar() {
 
     if (!audio) return;
 
-    // Update current time display
     if (fullTimeEl) {
         fullTimeEl.setAttribute('data-current-time', formatTime(audio.currentTime));
     }
 
-    // Update the width of the progress bar and handle position
     if (actualTimeEl && !isNaN(audio.duration) && audio.duration > 0) {
         const percentage = (audio.currentTime / audio.duration) * 100;
         actualTimeEl.style.width = `${percentage}%`;
 
-        // Update position of handle
         if (progressHandle) {
             progressHandle.style.left = `${percentage}%`;
         }
     }
 
-    // Update duration if available and not already set
     if (fullTimeEl && !isNaN(audio.duration)) {
         fullTimeEl.setAttribute('data-duration', formatTime(audio.duration));
     }
 }
 
-// Load and play a specific song in the playlist
 function loadSong(index) {
     const audio = document.getElementById("audioPlayer");
     const titleEl = document.querySelector(".name");
@@ -455,26 +393,21 @@ function loadSong(index) {
     currentIndex = index;
     const song = playlist[currentIndex];
 
-    // Update display
     titleEl.textContent = song.title || "Unknown Track";
     artistEl.textContent = song.artist || "";
     genreEl.textContent = song.genre || "";
 
-    // Reset time displays
     if (actualTimeEl) {
         actualTimeEl.style.width = "0%";
     }
 
-    // Reset handle position
     const progressHandle = document.querySelector(".progress-handle");
     if (progressHandle) {
         progressHandle.style.left = "0%";
     }
 
-    // Load audio
     const wasPlaying = !audio.paused;
 
-    // Try special cases for problematic songs first
     if ((song.artist && song.artist.toLowerCase().includes("kolors")) ||
         (song.title && song.title.toLowerCase().includes("ragazzo"))) {
         console.log("Loading The Kolors song with special handling");
@@ -486,18 +419,15 @@ function loadSong(index) {
         audio.src = "static/audio/Tony-Effe-DAMME-_NA-MANO.mp3";
     }
     else {
-        // First try with the static hardcoded paths for known songs
         const hardcodedPath = getHardcodedPath(song.artist, song.title);
         if (hardcodedPath) {
             console.log("Using hardcoded path:", hardcodedPath);
             audio.src = hardcodedPath;
         } else {
-            // Use the file path from the song object or create one as fallback
             audio.src = song.filePath || createFilePath(song.artist, song.title);
         }
     }
 
-    // Reset play button to play state initially
     playPauseBtn.src = "static/img/play.png";
     playPauseBtn.alt = "Play";
 
@@ -673,35 +603,35 @@ async function fetchSongDetails(songTitle) {
                 title: "Balorda Nostalgia",
                 artist: "OLLY",
                 genre: "Power ballad pop",
-                coverPath: "static/img/coverSong1.png",
+                coverPath: "static/img/BalordaCover.jpg",
                 filePath: "static/audio/OLLY - Balorda Nostalgia.mp3"
             },
             "fedez battito": {
                 title: "BATTITO",
                 artist: "Fedez",
                 genre: "Pop",
-                coverPath: "static/img/coverSong.png",
+                coverPath: "static/img/BattitoCover.jpg",
                 filePath: "static/audio/Fedez - BATTITO.mp3"
             },
             "giorgia la cura per me": {
-                title: "LA CURA PER ME",
+                title: "La Cura Per Me",
                 artist: "Giorgia",
                 genre: "Pop",
-                coverPath: "static/img/coverSong1.png",
+                coverPath: "static/img/CuraCover.jpg",
                 filePath: "static/audio/Giorgia - La cura per me.mp3"
             },
             "the kolors un ragazzo una ragazza": {
-                title: "UN RAGAZZO UNA RAGAZZA",
+                title: "Un Ragazzo Una Ragazza",
                 artist: "The Kolors",
                 genre: "Pop",
-                coverPath: "static/img/coverSong.png",
+                coverPath: "static/img/RagazzoCover.jpg",
                 filePath: "static/audio/The Kolors - Un ragazzo una ragazza.mp3"
             },
             "tony effe damme na mano": {
-                title: "DAMME 'NA MANO",
+                title: "Damme 'na mano",
                 artist: "Tony Effe",
                 genre: "Pop",
-                coverPath: "static/img/coverSong1.png",
+                coverPath: "static/img/DammeCover.jpg",
                 filePath: "static/audio/Tony-Effe-DAMME-_NA-MANO.mp3"
             }
         };

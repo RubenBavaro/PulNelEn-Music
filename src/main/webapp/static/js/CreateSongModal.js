@@ -68,26 +68,26 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // In-memory playlists
   let playlists = [
-    { 
-      name: '4ITIA-A',    
+    {
+      name: '4ITIA-A',
       songs: [
         { title: 'OLLY - Balorda Nostalgia', artist: 'OLLY', genre: 'Power ballad pop' },
         { title: 'Tony Effe - Damme \'na mano', artist: 'Tony Effe', genre: 'Pop' },
         { title: 'Giorgia - La cura per me', artist: 'Giorgia', genre: 'Pop' }
       ]
     },
-    { 
-      name: 'Workout Mix', 
+    {
+      name: 'Workout Mix',
       songs: [{ title: 'Battito - Fedez', artist: 'Fedez', genre: 'Pop' }]
     },
-    { 
-      name: 'Chill Vibes', 
-      songs: [] 
+    {
+      name: 'Chill Vibes',
+      songs: []
     }
   ];
 
   // Redraw bookshelf
-  function renderBookshelf() {
+  globalThis.renderBookshelf = function renderBookshelf() {
     playlistBookshelf.innerHTML = '';
     playlists.forEach(pl => {
       const book = document.createElement('div');
@@ -111,11 +111,11 @@ document.addEventListener('DOMContentLoaded', function() {
       book.addEventListener('click', e => {
         e.stopPropagation();
         showPlaylistSongs(pl.name, pl.songs.map(song => {
-          return { 
-            title: song.title, 
-            artist: song.artist || 'Unknown Artist', 
-            genre: song.genre || 'Pop', 
-            coverPath: 'static/img/coverSong1.png' 
+          return {
+            title: song.title,
+            artist: song.artist || 'Unknown Artist',
+            genre: song.genre || 'Pop',
+            coverPath: 'static/img/coverSong1.png'
           };
         }));
       });
@@ -224,4 +224,239 @@ document.addEventListener('DOMContentLoaded', function() {
     const btnContainer = document.querySelector('.button').parentElement;
     btnContainer.insertBefore(newSong, createButton);
   }
+
+  // --- REMOVAL FUNCTIONS (structured like add functions) ---
+
+  // Remove song from playlist (similar to add function structure)
+  function removeSongFromPlaylist(playlistName, songTitle) {
+    console.log("🚀 removeSongFromPlaylist called:", playlistName, songTitle);
+
+    // Find the target playlist in our in-memory array
+    const targetPlaylist = playlists.find(p => p.name === playlistName);
+    if (!targetPlaylist) {
+      console.error("❌ Playlist not found:", playlistName);
+      return Promise.reject(new Error('Playlist not found'));
+    }
+
+    console.log("📝 Before removal:", targetPlaylist.songs.length, "songs");
+
+    // Make API call to server
+    return fetch("removeSong", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({
+        name: playlistName,
+        song: songTitle
+      })
+    })
+        .then(res => {
+          console.log("📥 Server response:", res.status, res.statusText);
+          if (!res.ok) throw new Error(`HTTP error: ${res.status}`);
+          return res.text();
+        })
+        .then(message => {
+          console.log("✅ Server success:", message);
+
+          // Remove from in-memory array (like add function does it)
+          const initialLength = targetPlaylist.songs.length;
+          targetPlaylist.songs = targetPlaylist.songs.filter(song => {
+            // Handle different possible title formats
+            const matches = song.title === songTitle ||
+                song.title.includes(songTitle) ||
+                songTitle.includes(song.title);
+            return !matches;
+          });
+
+          console.log("📊 After removal:", targetPlaylist.songs.length, "songs");
+          console.log(`Removed ${initialLength - targetPlaylist.songs.length} song(s)`);
+
+          // Re-render bookshelf (like add function does)
+          renderBookshelf();
+
+          return message;
+        });
+  }
+
+  // Toggle remove button visibility (like modal toggle functions)
+  globalThis.toggleRemove = function(moreButton) {
+    console.log("🎚️ toggleRemove called");
+
+    if (!moreButton) {
+      console.error("❌ No button reference");
+      return;
+    }
+
+    const addedSongsDiv = moreButton.closest('.addedSongs');
+    if (!addedSongsDiv) {
+      console.error("❌ Could not find parent .addedSongs element");
+      return;
+    }
+
+    const removeButton = addedSongsDiv.nextElementSibling;
+    if (!removeButton || !removeButton.classList.contains('remove')) {
+      console.error("❌ Could not find next sibling .remove element");
+      return;
+    }
+
+    // Hide all other remove buttons first
+    document.querySelectorAll('.remove').forEach(btn => {
+      if (btn !== removeButton) {
+        btn.style.display = 'none';
+      }
+    });
+
+    // Toggle this specific remove button
+    if (removeButton.style.display === 'flex' || removeButton.style.display === 'block') {
+      removeButton.style.display = 'none';
+    } else {
+      removeButton.style.display = 'flex';
+    }
+  };
+
+  // Main remove song function (structured like add button handler)
+  globalThis.removeSong = function(removeButton) {
+    console.log("🚀 removeSong initiated");
+
+    if (!removeButton) {
+      console.error("❌ No button reference");
+      return;
+    }
+
+    // Find song data (similar to how add function finds data)
+    let songContainer = removeButton.closest('[data-playlist-name]');
+    let songName, playlistName;
+
+    if (songContainer) {
+      // Standard case with data attributes
+      const addedSongsDiv = songContainer.querySelector('.addedSongs');
+      const songNameElement = addedSongsDiv?.querySelector('.nameSong');
+
+      if (!songNameElement) {
+        console.error("❌ Could not find song name");
+        return;
+      }
+
+      songName = songNameElement.textContent.trim();
+      playlistName = songContainer.dataset.playlistName;
+    } else {
+      // Fallback case
+      const parentDiv = removeButton.parentElement;
+      const songDiv = parentDiv?.querySelector(".addedSongs");
+      const nameElement = songDiv?.querySelector(".nameSong");
+
+      if (!nameElement) {
+        console.error("❌ Could not find song name in fallback");
+        return;
+      }
+
+      songName = nameElement.textContent.trim();
+      songContainer = parentDiv;
+
+      // Try to find playlist name from context
+      playlistName = 'Unknown Playlist';
+      const playlistNameEl = document.querySelector('.playlist-name');
+      if (playlistNameEl) {
+        playlistName = playlistNameEl.textContent.trim();
+      } else {
+        const modalTitle = document.querySelector('.modal-content h3');
+        if (modalTitle) {
+          playlistName = modalTitle.textContent.trim();
+        }
+      }
+    }
+
+    console.log("📝 Removing song:", songName, "from playlist:", playlistName);
+
+    // Visual feedback
+    songContainer.style.opacity = "0.5";
+    songContainer.style.transition = "opacity 0.3s";
+
+    // Call our removal function (like add button calls add function)
+    removeSongFromPlaylist(playlistName, songName)
+        .then(message => {
+          // Remove from DOM after successful API call
+          songContainer.remove();
+          console.log("🗑️ DOM element removed");
+          alert(`Canzone rimossa da "${playlistName}"`);
+        })
+        .catch(err => {
+          console.error("❌ Removal failed:", err);
+          songContainer.style.opacity = "1"; // Restore on failure
+          alert("Errore nella rimozione della canzone");
+        });
+  };
+
+  // Modal remove function (structured like modal add function)
+  globalThis.handleModalRemove = function(removeButton, playlistName, songTitle) {
+    console.log("🚀 Modal removal for:", songTitle, "in:", playlistName);
+
+    const songElement = removeButton.closest('.modal-song-card');
+    if (!songElement) {
+      console.error("❌ Could not find song card");
+      return;
+    }
+
+    const container = songElement.parentElement;
+    const modal = container.closest('.playlist-modal');
+
+    // Visual feedback
+    songElement.style.transition = 'opacity 0.3s';
+    songElement.style.opacity = '0.5';
+
+    // Call our removal function (like modal add calls add function)
+    removeSongFromPlaylist(playlistName, songTitle)
+        .then(message => {
+          // Remove from modal DOM
+          songElement.remove();
+          console.log("🗑️ Modal element removed");
+
+          // Close modal if empty
+          if (container && container.children.length === 0 && modal) {
+            modal.classList.remove('active');
+            console.log("🚪 Closed empty modal");
+          }
+        })
+        .catch(err => {
+          console.error("❌ Modal removal failed:", err);
+          songElement.style.opacity = '1'; // Restore on failure
+          alert("Errore nella rimozione della canzone");
+        });
+  };
+
+  // Event delegation for remove buttons (like add button event delegation)
+  document.addEventListener('click', function(event) {
+    // Handle more button clicks
+    if (event.target.classList.contains('more')) {
+      event.stopPropagation();
+      globalThis.toggleRemove(event.target);
+    }
+
+    // Handle remove button clicks in playlist view
+    if (event.target.classList.contains('remove')) {
+      event.stopPropagation();
+      globalThis.removeSong(event.target);
+    }
+
+    // Handle modal remove button clicks
+    if (event.target.classList.contains('remove-song')) {
+      event.stopPropagation();
+
+      const songCard = event.target.closest('.modal-song-card');
+      const songNameElement = songCard?.querySelector('.song-name');
+      const modalContent = songCard?.closest('.modal-content');
+      const playlistNameElement = modalContent?.querySelector('h3');
+
+      if (!songNameElement || !playlistNameElement) {
+        console.error("❌ Could not find required elements for modal removal");
+        return;
+      }
+
+      const songTitle = songNameElement.textContent.trim();
+      const playlistName = playlistNameElement.textContent.trim();
+
+      globalThis.handleModalRemove(event.target, playlistName, songTitle);
+    }
+  });
+
+  console.log("✅ CreateSongModal.js with removal logic loaded successfully");
 });
