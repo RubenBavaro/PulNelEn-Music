@@ -71,9 +71,9 @@ document.addEventListener('DOMContentLoaded', function() {
     {
       name: '4ITIA-A',
       songs: [
-        { title: 'OLLY - Balorda Nostalgia', artist: 'OLLY', genre: 'Power ballad pop' },
-        { title: 'Tony Effe - Damme \'na mano', artist: 'Tony Effe', genre: 'Pop' },
-        { title: 'Giorgia - La cura per me', artist: 'Giorgia', genre: 'Pop' }
+        { title: 'Balorda Nostalgia - OLLY', artist: 'OLLY', genre: 'Power ballad pop' },
+        { title: 'Damme \'na mano - Tony Effe', artist: 'Tony Effe', genre: 'Pop' },
+        { title: 'La cura per me - Giorgia', artist: 'Giorgia', genre: 'Pop' }
       ]
     },
     {

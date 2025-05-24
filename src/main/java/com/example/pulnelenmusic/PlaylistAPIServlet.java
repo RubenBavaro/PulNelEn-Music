@@ -10,7 +10,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 // Fixed: Added leading slash to the URL pattern
-@WebServlet(name = "PlaylistAPIServlet", value = "/api/playlist")
+@WebServlet(name = "PlaylistAPIServlet", value = "api/playlist")
 public class PlaylistAPIServlet extends HttpServlet {
     private final PlaylistManager pm = new PlaylistManager("C:\\\\playlists.txt");
     private final Gson gson = new Gson();

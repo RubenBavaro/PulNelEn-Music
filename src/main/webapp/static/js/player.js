@@ -251,7 +251,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (artist.toLowerCase().includes("kolors") || title.toLowerCase().includes("ragazzo")) {
             console.log("Trying special case for The Kolors");
-            audio.src = "static/audio/The Kolors - Un ragazzo una ragazza.mp3";
+            audio.src = "static/audio/The Kolors - UN RAGAZZO UNA RAGAZZA.mp3";
             audio.play().then(() => {
                 playPauseBtn.src = "static/img/pause.png";
                 playPauseBtn.alt = "Pause";
@@ -411,7 +411,7 @@ function loadSong(index) {
     if ((song.artist && song.artist.toLowerCase().includes("kolors")) ||
         (song.title && song.title.toLowerCase().includes("ragazzo"))) {
         console.log("Loading The Kolors song with special handling");
-        audio.src = "static/audio/The Kolors - Un ragazzo una ragazza.mp3";
+        audio.src = "static/audio/The Kolors - UN RAGAZZO UNA RAGAZZA.mp3";
     }
     else if ((song.artist && song.artist.toLowerCase().includes("tony")) ||
         (song.title && song.title.toLowerCase().includes("damme"))) {
@@ -618,14 +618,14 @@ async function fetchSongDetails(songTitle) {
                 artist: "Giorgia",
                 genre: "Pop",
                 coverPath: "static/img/CuraCover.jpg",
-                filePath: "static/audio/Giorgia - La cura per me.mp3"
+                filePath: "static/audio/Giorgia - LA CURA PER ME.mp3"
             },
             "the kolors un ragazzo una ragazza": {
                 title: "Un Ragazzo Una Ragazza",
                 artist: "The Kolors",
                 genre: "Pop",
                 coverPath: "static/img/RagazzoCover.jpg",
-                filePath: "static/audio/The Kolors - Un ragazzo una ragazza.mp3"
+                filePath: "static/audio/The Kolors - UN RAGAZZO UNA RAGAZZA.mp3"
             },
             "tony effe damme na mano": {
                 title: "Damme 'na mano",
@@ -768,7 +768,7 @@ function createFilePath(artist, title) {
     }
 
     if (artist.toLowerCase() === "the kolors" && title.toLowerCase().includes("ragazzo")) {
-        return "static/audio/The Kolors - Un ragazzo una ragazza.mp3";
+        return "static/audio/The Kolors - UN RAGAZZO UNA RAGAZZA.mp3";
     }
 
     if (artist.toLowerCase() === "giorgia" && title.toLowerCase().includes("cura")) {
